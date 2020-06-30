@@ -7,6 +7,7 @@
 //
 
 #import "Tweet.h"
+#import "DateTools.h"
 
 @implementation Tweet
 
@@ -27,8 +28,8 @@
         self.favoriteCount = [dictionary[@"favorite_count"] intValue];
         self.favorited = [dictionary[@"favorited"] boolValue];
         self.retweetCount = [dictionary[@"retweet_count"] intValue];
-        self.retweeted = [dictionary[@"retweeted"] boolValue];
         self.replyCount = [dictionary[@"reply_count"] intValue];
+        self.retweeted = [dictionary[@"retweeted"] boolValue];
         
         NSDictionary *user = dictionary[@"user"];
         self.user = [[User alloc] initWithDictionary:user];
@@ -39,7 +40,9 @@
         NSDate *date = [formatter dateFromString:createdAtOriginalString];
         formatter.dateStyle = NSDateFormatterShortStyle;
         formatter.timeStyle = NSDateFormatterNoStyle;
+        NSDate *timeAgo = [NSDate dateWithTimeInterval:0 sinceDate:date];
         self.createdAtString = [formatter stringFromDate:date];
+        self.timeAgoString = timeAgo.shortTimeAgoSinceNow;
     }
     return self;
 }

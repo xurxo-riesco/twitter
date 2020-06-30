@@ -14,9 +14,15 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
+    UITapGestureRecognizer *profileTapGestureRecognizer = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTapUserProfile:)];
+    [self.profileView addGestureRecognizer:profileTapGestureRecognizer];
+    [self.profileView setUserInteractionEnabled:YES];
+    
     // Initialization code
 }
-
+- (void) didTapUserProfile:(UITapGestureRecognizer *)sender{
+    [self.delegate tweetCell:self didTap:self.tweet.user];
+}
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
 
@@ -102,8 +108,8 @@
     {
         self.favoriteButton.selected = YES;
     }
-    self.accountLabel.text = [[tweet user] name];
-    self.usernameLabel.text = [NSString stringWithFormat:@"@%@", [[tweet user] screenName] ];
+    self.usernameLabel.text = [[tweet user] name];
+    self.accountLabel.text = [NSString stringWithFormat:@"@%@", [[tweet user] screenName] ];
     self.contentLabel.text = [tweet text];
     NSURL *url = [[tweet user] profileImageUrl];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
@@ -114,10 +120,9 @@
     }
                                      failure:^(NSURLRequest *request, NSHTTPURLResponse * response, NSError *error) {
     }];
-    self.dateLabel.text = [tweet createdAtString];
+    self.dateLabel.text =[tweet timeAgoString];
     self.retweetsLabel.text = [NSString stringWithFormat:@"%d", [tweet retweetCount]];
     self.favoritesLabel.text = [NSString stringWithFormat:@"%d", [tweet favoriteCount]];
-    self.responsesLabel.text = [NSString stringWithFormat:@"%d", [tweet replyCount]];
     
     
 }

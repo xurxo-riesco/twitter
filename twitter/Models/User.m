@@ -15,7 +15,17 @@
         self.name = dictionary[@"name"];
         self.screenName = dictionary[@"screen_name"];
         self.profileImageUrl = [NSURL URLWithString:dictionary[@"profile_image_url_https"]];
+        self.followersCount = [dictionary[@"followers_count"] intValue];
+        self.followingCount = [dictionary[@"friends_count"] intValue];
+        self.tweetCount = [dictionary[@"statuses_count"] intValue];
+        self.bio = dictionary[@"description"];
+        self.userId = dictionary[@"id"];
     }
     return self;
+}
+
++ (User *)userWithArray:(NSDictionary *)dictionary{
+    User *user = [[User alloc] initWithDictionary:dictionary];
+    return user;
 }
 @end

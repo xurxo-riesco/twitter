@@ -10,9 +10,9 @@
 #import "APIManager.h"
 #import "Tweet.h"
 
-@interface ComposeViewController ()
+@interface ComposeViewController () <UITextViewDelegate>
 @property (strong, nonatomic) IBOutlet UITextView *textView;
-
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *charactersRemaining;
 
 @end
 
@@ -20,6 +20,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.textView.delegate = self;
+    if(self.isResponse)
+    {
+        self.textView.text = [NSString stringWithFormat:@"@%@ ", [[self.tweet user] screenName] ];
+    }
     // Do any additional setup after loading the view.
 }
 - (IBAction)close:(id)sender {
@@ -28,18 +33,40 @@
 - (IBAction)didTapPost:(id)sender {
     [self composeTweet];
 }
+- (void)textViewDidChange:(UITextView *)textView
+{
+    NSLog(@"Changing");
+    NSUInteger length;
+    length = [textView.text length];
+
+    self.charactersRemaining.title = [NSString stringWithFormat:@"%lu", (280 -(unsigned long)length)];
+}
 
 - (void)composeTweet
 {
-    [[APIManager shared]postStatusWithText:self.textView.text completion:^(Tweet *tweet, NSError *error) {
-        if(error){
-            NSLog(@"Error composing Tweet: %@", error.localizedDescription);
-        }
-        else{
-            [self.delegate didTweet:tweet];
-            NSLog(@"Composed tweet sucessfully!");
-        }
-    }];
+    if(self.isResponse)
+    {
+        [[APIManager shared]replyStatusWithText:self.textView.text toID:self.tweet.idStr completion:^(Tweet *tweet, NSError *error) {
+            if(error){
+                NSLog(@"Error composing Tweet: %@", error.localizedDescription);
+            }
+            else{
+                [self.delegate didTweet:tweet];
+                NSLog(@"Composed tweet sucessfully!");
+            }
+        }];
+        self.isResponse = false;
+    }else{
+        [[APIManager shared]postStatusWithText:self.textView.text completion:^(Tweet *tweet, NSError *error) {
+            if(error){
+                NSLog(@"Error composing Tweet: %@", error.localizedDescription);
+            }
+            else{
+                [self.delegate didTweet:tweet];
+                NSLog(@"Composed tweet sucessfully!");
+            }
+        }];
+    }
     [self dismissViewControllerAnimated:true completion:nil];
     
 }

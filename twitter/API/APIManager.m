@@ -79,9 +79,57 @@ static NSString * const consumerSecret = @"MqrN7xiB2bBRPqs5nhbM4vv78gOkdzGy13p7f
              completion(nil, error);
          }];
 }
+- (void)moreHomeTimelineWithCompletion:(NSString *)max_id completion:(void (^)(NSArray *tweets, NSError *))completion {
+     NSDictionary *parameters = @{@"max_id": max_id};
+     [self GET:@"1.1/statuses/home_timeline.json"
+         parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, NSArray *  _Nullable tweetDictionaries) {
+             // Success
+             NSMutableArray *tweets  = [Tweet tweetsWithArray:tweetDictionaries];
+             completion(tweets, nil);
+         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+             // There was a problem
+             completion(nil, error);
+         }];
+}
+- (void)getUserTimelineWithCompletion:(NSString *)user_id completion:(void (^)(NSArray *tweets, NSError *))completion {
+     NSDictionary *parameters = @{@"user_id": user_id};
+     [self GET:@"1.1/statuses/user_timeline.json"
+         parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, NSArray *  _Nullable tweetDictionaries) {
+             // Success
+             NSMutableArray *tweets  = [Tweet tweetsWithArray:tweetDictionaries];
+             completion(tweets, nil);
+         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+             // There was a problem
+             completion(nil, error);
+         }];
+}
+- (void)getCurrentUser:(void (^)(User *user, NSError *))completion {
+     [self GET:@"1.1/account/verify_credentials.json"
+         parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, NSDictionary *  _Nullable userDict) {
+             // Success
+             User *user  = [User userWithArray:userDict];
+         NSLog(@"USERS: %@", user);
+             completion(user, nil);
+         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+             // There was a problem
+             completion(nil, error);
+         }];
+}
 - (void)postStatusWithText:(NSString *)text completion:(void (^)(Tweet *, NSError *))completion{
     NSString *urlString = @"1.1/statuses/update.json";
     NSDictionary *parameters = @{@"status": text};
+    
+    [self POST:urlString parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, NSDictionary *  _Nullable tweetDictionary) {
+        Tweet *tweet = [[Tweet alloc]initWithDictionary:tweetDictionary];
+        completion(tweet, nil);
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        completion(nil, error);
+    }];
+}
+
+- (void)replyStatusWithText:(NSString *)text toID: (NSString*)reply_id completion:(void (^)(Tweet *, NSError *))completion{
+    NSString *urlString = @"1.1/statuses/update.json";
+    NSDictionary *parameters = @{@"status": text,@"in_reply_to_status_id": reply_id };
     
     [self POST:urlString parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, NSDictionary *  _Nullable tweetDictionary) {
         Tweet *tweet = [[Tweet alloc]initWithDictionary:tweetDictionary];

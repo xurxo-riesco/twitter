@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -20,6 +20,9 @@
 		9813DB6F24A97F990012CDD1 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 9813DB6E24A97F990012CDD1 /* User.m */; };
 		9813DB7224A97FF00012CDD1 /* Tweet.m in Sources */ = {isa = PBXBuildFile; fileRef = 9813DB7124A97FF00012CDD1 /* Tweet.m */; };
 		9813DB7524A982690012CDD1 /* TweetCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9813DB7424A982690012CDD1 /* TweetCell.m */; };
+		98C9F4D124ABAAF5003FADDC /* TweetDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98C9F4D024ABAAF5003FADDC /* TweetDetailsViewController.m */; };
+		98C9F4D424ABDC07003FADDC /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98C9F4D324ABDC07003FADDC /* ProfileViewController.m */; };
+		98C9F4D724ABEDC6003FADDC /* ProfileTweet.m in Sources */ = {isa = PBXBuildFile; fileRef = 98C9F4D624ABEDC6003FADDC /* ProfileTweet.m */; };
 		98D842BC24AA8D57006086D9 /* ComposeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98D842BB24AA8D57006086D9 /* ComposeViewController.m */; };
 /* End PBXBuildFile section */
 
@@ -49,6 +52,12 @@
 		9813DB7124A97FF00012CDD1 /* Tweet.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Tweet.m; sourceTree = "<group>"; };
 		9813DB7324A982690012CDD1 /* TweetCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TweetCell.h; sourceTree = "<group>"; };
 		9813DB7424A982690012CDD1 /* TweetCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TweetCell.m; sourceTree = "<group>"; };
+		98C9F4CF24ABAAF5003FADDC /* TweetDetailsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TweetDetailsViewController.h; sourceTree = "<group>"; };
+		98C9F4D024ABAAF5003FADDC /* TweetDetailsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TweetDetailsViewController.m; sourceTree = "<group>"; };
+		98C9F4D224ABDC07003FADDC /* ProfileViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ProfileViewController.h; sourceTree = "<group>"; };
+		98C9F4D324ABDC07003FADDC /* ProfileViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ProfileViewController.m; sourceTree = "<group>"; };
+		98C9F4D524ABEDC6003FADDC /* ProfileTweet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ProfileTweet.h; sourceTree = "<group>"; };
+		98C9F4D624ABEDC6003FADDC /* ProfileTweet.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ProfileTweet.m; sourceTree = "<group>"; };
 		98D842BA24AA8D57006086D9 /* ComposeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ComposeViewController.h; sourceTree = "<group>"; };
 		98D842BB24AA8D57006086D9 /* ComposeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ComposeViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -136,6 +145,8 @@
 			children = (
 				9813DB7324A982690012CDD1 /* TweetCell.h */,
 				9813DB7424A982690012CDD1 /* TweetCell.m */,
+				98C9F4D524ABEDC6003FADDC /* ProfileTweet.h */,
+				98C9F4D624ABEDC6003FADDC /* ProfileTweet.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -149,6 +160,10 @@
 				6AD2790820BCC04D0085BC29 /* TimelineViewController.m */,
 				98D842BA24AA8D57006086D9 /* ComposeViewController.h */,
 				98D842BB24AA8D57006086D9 /* ComposeViewController.m */,
+				98C9F4CF24ABAAF5003FADDC /* TweetDetailsViewController.h */,
+				98C9F4D024ABAAF5003FADDC /* TweetDetailsViewController.m */,
+				98C9F4D224ABDC07003FADDC /* ProfileViewController.h */,
+				98C9F4D324ABDC07003FADDC /* ProfileViewController.m */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -173,6 +188,7 @@
 				6AD278D120BC4B950085BC29 /* Sources */,
 				6AD278D220BC4B950085BC29 /* Frameworks */,
 				6AD278D320BC4B950085BC29 /* Resources */,
+				8415603849A0B060CBF6C18C /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -247,6 +263,23 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		8415603849A0B060CBF6C18C /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-twitter/Pods-twitter-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-twitter/Pods-twitter-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-twitter/Pods-twitter-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -257,12 +290,15 @@
 				9813DB7524A982690012CDD1 /* TweetCell.m in Sources */,
 				6AD278F320BCA6020085BC29 /* BDBOAuth1SessionManager+SFAuthenticationSession.m in Sources */,
 				9813DB6F24A97F990012CDD1 /* User.m in Sources */,
+				98C9F4D124ABAAF5003FADDC /* TweetDetailsViewController.m in Sources */,
 				98D842BC24AA8D57006086D9 /* ComposeViewController.m in Sources */,
 				6AD278E820BC4B970085BC29 /* main.m in Sources */,
 				9813DB7224A97FF00012CDD1 /* Tweet.m in Sources */,
 				6AD2790620BCC0380085BC29 /* LoginViewController.m in Sources */,
 				6AD278DA20BC4B950085BC29 /* AppDelegate.m in Sources */,
 				6AD278F620BCB68B0085BC29 /* APIManager.m in Sources */,
+				98C9F4D424ABDC07003FADDC /* ProfileViewController.m in Sources */,
+				98C9F4D724ABEDC6003FADDC /* ProfileTweet.m in Sources */,
 				6AD2790920BCC04D0085BC29 /* TimelineViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
