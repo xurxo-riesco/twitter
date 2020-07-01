@@ -10,16 +10,17 @@
 #import "UIImageView+AFNetworking.h"
 #import "APIManager.h"
 #import "ComposeViewController.h"
-#import "TTTAttributedLabel.h"
+#import <ResponsiveLabel.h>
 
 @interface TweetDetailsViewController ()
 @property (weak, nonatomic) IBOutlet UIImageView *profileView;
 @property (weak, nonatomic) IBOutlet UILabel *screennameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *usernameLabel;
-@property (weak, nonatomic) IBOutlet TTTAttributedLabel *tweetLabel;
+@property (weak, nonatomic) IBOutlet ResponsiveLabel *tweetLabel;
 @property (weak, nonatomic) IBOutlet UIButton *favoriteButton;
 @property (weak, nonatomic) IBOutlet UIButton *retweetButton;
 @property (weak, nonatomic) IBOutlet UIButton *replyButton;
+@property (weak, nonatomic) IBOutlet UIImageView *mediaView;
 
 @end
 
@@ -32,12 +33,43 @@
     self.usernameLabel.text = [[self.tweet user] name];
     self.screennameLabel.text = [NSString stringWithFormat:@"@%@", [[self.tweet user] screenName] ];
     self.tweetLabel.text = [self.tweet text];
+    self.tweetLabel.userInteractionEnabled = YES;
+    PatternTapResponder hashTagTapAction = ^(NSString *tappedString) {
+    NSLog(@"HashTag Tapped = %@",tappedString);
+    };
+    [self.tweetLabel enableHashTagDetectionWithAttributes:
+    @{NSForegroundColorAttributeName:[UIColor blueColor], RLTapResponderAttributeName:hashTagTapAction}];
+    PatternTapResponder userHandleTapAction = ^(NSString *tappedString){
+    NSLog(@"Username Handler Tapped = %@",tappedString);
+    };
+    [self.tweetLabel enableUserHandleDetectionWithAttributes:
+    @{NSForegroundColorAttributeName:[UIColor blueColor],RLTapResponderAttributeName:userHandleTapAction}];
+    PatternTapResponder urlTapAction = ^(NSString *tappedString) {
+    NSLog(@"URL Tapped = %@",tappedString);
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:tappedString]];
+    };
+    [self.tweetLabel enableURLDetectionWithAttributes:@{NSForegroundColorAttributeName:[UIColor cyanColor],NSUnderlineStyleAttributeName:[NSNumber
+    numberWithInt:1],RLTapResponderAttributeName:urlTapAction}];
+    
     NSURL *url = [[self.tweet user] profileImageUrl];
+    NSString *urlString = url.absoluteString;
+    NSLog(@"%@", urlString);
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     [self.profileView setImageWithURLRequest:request
                             placeholderImage:nil
                                      success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
         self.profileView.image = image;
+    }
+                                     failure:^(NSURLRequest *request, NSHTTPURLResponse * response, NSError *error) {
+    }];
+    NSURL *mediaUrl = [self.tweet mediaURL];
+    NSString *mediaUrlString = url.absoluteString;
+    NSLog(@"%@", mediaUrlString);
+    NSURLRequest *mediaRequest = [NSURLRequest requestWithURL:mediaUrl];
+    [self.mediaView setImageWithURLRequest:mediaRequest
+                            placeholderImage:nil
+                                     success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+        self.mediaView.image = image;
     }
                                      failure:^(NSURLRequest *request, NSHTTPURLResponse * response, NSError *error) {
     }];
@@ -121,31 +153,6 @@
     ComposeViewController *composeViewController = [segue destinationViewController];
     composeViewController.isResponse = true;
     composeViewController.tweet = self.tweet;
-}
-
-- (void) setupAttributedLabel {
-    TTTAttributedLabel *label = [[TTTAttributedLabel alloc] initWithFrame:CGRectZero];
-    label.font = [UIFont systemFontOfSize:14];
-    label.textColor = [UIColor lightGrayColor];
-    label.numberOfLines = 0;
-    label.textAlignment = NSTextAlignmentCenter;
-    label.text = @"Hola"; // [self.tweet text];
-    label.enabledTextCheckingTypes = NSTextCheckingTypeLink;
-    label.delegate = self;
-
-    //[self.view addSubview:label];
-    self.tweetLabel = label;
-}
-- (void)openSafariWithURL:(NSURL *)url {
-    [[UIApplication sharedApplication] openURL:url options:@{} completionHandler:^(BOOL success) {
-        if (success) {
-             NSLog(@"Opened url");
-        }
-    }];
-}
-- (void)attributedLabel:(TTTAttributedLabel *)label
-   didSelectLinkWithURL:(NSURL *)url {
-    [self openSafariWithURL:url];
 }
 
 @end

@@ -27,6 +27,13 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    UISwipeGestureRecognizer *swipeGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(didSwipe:)];
+    
+    // Optionally set the number of required taps, e.g., 2 for a double click
+    
+    // Attach it to a view of your choice. If it's a UIImageView, remember to enable user interaction
+    [self.view setUserInteractionEnabled:YES];
+    [self.view addGestureRecognizer:swipeGestureRecognizer];
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
     self.nameLabel.text = self.user.name;
@@ -76,6 +83,25 @@
 
 - (NSInteger)tableView:(nonnull UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.tweets.count;
+}
+- (IBAction)didSwipe:(UISwipeGestureRecognizer *)sender {
+    NSLog(@"Swipppiing");
+    NSString *urlString = self.user.profileImageUrl.absoluteString;
+    NSString *qualityUrl = [urlString stringByReplacingOccurrencesOfString:@"_normal" withString:@""];
+    NSLog(@"%@", qualityUrl);
+    NSURL *newUrl = [NSURL URLWithString:qualityUrl];
+    NSURLRequest *request = [NSURLRequest requestWithURL:newUrl];
+    [self.profileView setImageWithURLRequest:request
+                            placeholderImage:nil
+                                     success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+        [UIView animateWithDuration:0.2 animations:^{
+            self.profileView.image = image;
+            self.profileView.frame = CGRectMake(self.profileView.frame.origin.x, self.profileView.frame.origin.y, self.profileView.frame.size.width + 50, self.profileView.frame.size.height + 50);
+                                      }];
+    }
+                                     failure:^(NSURLRequest *request, NSHTTPURLResponse * response, NSError *error) {
+    }];
+    
 }
 
 @end

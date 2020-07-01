@@ -79,6 +79,17 @@ static NSString * const consumerSecret = @"MqrN7xiB2bBRPqs5nhbM4vv78gOkdzGy13p7f
              completion(nil, error);
          }];
 }
+- (void)getMentionsTimelineWithCompletion:(void(^)(NSArray *tweets, NSError *error))completion {
+     [self GET:@"1.1/statuses/mentions_timeline.json"
+         parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, NSArray *  _Nullable tweetDictionaries) {
+             // Success
+             NSMutableArray *tweets  = [Tweet tweetsWithArray:tweetDictionaries];
+             completion(tweets, nil);
+         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+             // There was a problem
+             completion(nil, error);
+         }];
+}
 - (void)moreHomeTimelineWithCompletion:(NSString *)max_id completion:(void (^)(NSArray *tweets, NSError *))completion {
      NSDictionary *parameters = @{@"max_id": max_id};
      [self GET:@"1.1/statuses/home_timeline.json"

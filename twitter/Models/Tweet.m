@@ -30,6 +30,17 @@
         self.retweetCount = [dictionary[@"retweet_count"] intValue];
         self.replyCount = [dictionary[@"reply_count"] intValue];
         self.retweeted = [dictionary[@"retweeted"] boolValue];
+        NSDictionary *entities = dictionary[@"entities"];
+        NSArray *media = entities[@"media"];
+        for (NSDictionary *dictionary in media) {
+            //NSLog(@"%@", dictionary);
+            NSString *urlString = dictionary[@"media_url_https"];
+            NSLog(@"%@", urlString);
+            self.mediaURL = [NSURL URLWithString:dictionary[@"media_url_https"]];
+        }
+        //NSLog(@"%@", media[5]);
+        
+        //self.mediaURL = [NSURL URLWithString:media[@"display_url"]];
         
         NSDictionary *user = dictionary[@"user"];
         self.user = [[User alloc] initWithDictionary:user];

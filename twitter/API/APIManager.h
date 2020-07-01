@@ -24,4 +24,5 @@
 - (void)replyStatusWithText:(NSString *)text toID: (NSString*)reply_id completion:(void (^)(Tweet *, NSError *))completion;
 - (void)getUserTimelineWithCompletion:(NSString *)user_id completion:(void (^)(NSArray *tweets, NSError *))completion;
 - (void)getCurrentUser:(void (^)(User *user, NSError *))completion;
+- (void)getMentionsTimelineWithCompletion:(void(^)(NSArray *tweets, NSError *error))completion;
 @end

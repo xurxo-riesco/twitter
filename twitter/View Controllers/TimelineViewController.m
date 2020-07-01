@@ -15,6 +15,7 @@
 #import "AppDelegate.h"
 #import "TweetDetailsViewController.h"
 #import "ProfileViewController.h"
+#import "MentionsViewController.h"
 
 @interface TimelineViewController () < ComposeViewControllerDelegate, UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate>
 @property (strong, nonatomic) NSMutableArray *tweets;
@@ -133,7 +134,7 @@
         UINavigationController *navigationController = [segue destinationViewController];
         ComposeViewController *composeController = (ComposeViewController*)navigationController.topViewController;
         composeController.delegate = self;
-    }else{
+    }else if([segue.identifier  isEqual: @"profileSegue"]){
         if(self.ownProfile){
             self.ownProfile = false;
             ProfileViewController *profileViewController = [segue destinationViewController];
@@ -142,6 +143,7 @@
             ProfileViewController *profileViewController = [segue destinationViewController];
             profileViewController.user = self.user;
         }
+    }else{
     }
 
     // Get the new view controller using [segue destinationViewController].
