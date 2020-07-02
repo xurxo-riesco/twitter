@@ -17,6 +17,19 @@ PODS:
   - BDBOAuth1Manager (2.0.0):
     - AFNetworking/NSURLSession (~> 3.0.0)
   - DateTools (2.0.0)
+  - JGProgressHUD (2.1)
+  - MMDrawerController (0.5.7):
+    - MMDrawerController/Core (= 0.5.7)
+    - MMDrawerController/MMDrawerBarButtonItem (= 0.5.7)
+    - MMDrawerController/MMDrawerVisualStates (= 0.5.7)
+    - MMDrawerController/Subclass (= 0.5.7)
+  - MMDrawerController/Core (0.5.7)
+  - MMDrawerController/MMDrawerBarButtonItem (0.5.7):
+    - MMDrawerController/Core
+  - MMDrawerController/MMDrawerVisualStates (0.5.7):
+    - MMDrawerController/Core
+  - MMDrawerController/Subclass (0.5.7):
+    - MMDrawerController/Core
   - ResponsiveLabel (1.0.11)
   - TTTAttributedLabel (2.0.0)
 
@@ -24,6 +37,8 @@ DEPENDENCIES:
   - AFNetworking
   - BDBOAuth1Manager
   - DateTools
+  - JGProgressHUD
+  - MMDrawerController (~> 0.5.7)
   - ResponsiveLabel (~> 1.0.11)
   - TTTAttributedLabel
 
@@ -32,6 +47,8 @@ SPEC REPOS:
     - AFNetworking
     - BDBOAuth1Manager
     - DateTools
+    - JGProgressHUD
+    - MMDrawerController
     - ResponsiveLabel
     - TTTAttributedLabel
 
@@ -39,9 +56,11 @@ SPEC CHECKSUMS:
   AFNetworking: a0075feb321559dc78d9d85b55d11caa19eabb93
   BDBOAuth1Manager: 92d17d06f8a648602962304cd2f35ae7394fa001
   DateTools: 933ac9c490f21f92127cf690ccd8c397e0126caf
+  JGProgressHUD: aa403e9a5b45cae98903c4600cccdd98c0c3ec90
+  MMDrawerController: 7a4cf8e25596bf2434e03ce50d22a8608ddee6a1
   ResponsiveLabel: 9e31c425ed082481faf2360689243bb0ec8f8b22
   TTTAttributedLabel: 8cffe8e127e4e82ff3af1e5386d4cd0ad000b656
 
-PODFILE CHECKSUM: 63e567b0d045c93fe18c847ec0718c853a537470
+PODFILE CHECKSUM: 9543cac4f1e355b79bebf9cc3bd516a490c0cb66
 
 COCOAPODS: 1.9.3

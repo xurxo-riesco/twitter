@@ -18,6 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSString *bio;
 @property (nonatomic, strong) NSString *userId;
 @property(strong, nonatomic) NSURL *profileImageUrl;
+@property(strong, nonatomic) NSURL *backgroundUrl;
 @property(nonatomic) int followersCount;
 @property(nonatomic) int tweetCount;
 @property(nonatomic) int followingCount;

@@ -6,11 +6,11 @@
 //  Copyright © 2020 Emerson Malca. All rights reserved.
 //
 
-#import "TweetCell.h"
+#import "SearchCell.h"
 #import "UIImageView+AFNetworking.h"
 #import "APIManager.h"
 
-@implementation TweetCell
+@implementation SearchCell
 
 - (void)awakeFromNib {
     [super awakeFromNib];
@@ -19,9 +19,6 @@
     [self.profileView setUserInteractionEnabled:YES];
     
     // Initialization code
-}
-- (void) didTapUserProfile:(UITapGestureRecognizer *)sender{
-    [self.delegate tweetCell:self didTap:self.tweet.user];
 }
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];

@@ -114,12 +114,39 @@ static NSString * const consumerSecret = @"MqrN7xiB2bBRPqs5nhbM4vv78gOkdzGy13p7f
              completion(nil, error);
          }];
 }
+- (void)searchTimelineWithCompletion:(NSString *)q completion:(void (^)(NSArray *tweets, NSError *))completion {
+     NSDictionary *parameters = @{@"q": q};
+     [self GET:@"1.1/search/tweets.json"
+         parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, NSDictionary *  _Nullable tweetDictionaries) {
+             // Success
+         NSArray *tweetArray =tweetDictionaries[@"statuses"];
+             NSMutableArray *tweets  = [Tweet tweetsWithArray:tweetArray];
+             completion(tweets, nil);
+         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+             // There was a problem
+             completion(nil, error);
+         }];
+}
 - (void)getCurrentUser:(void (^)(User *user, NSError *))completion {
      [self GET:@"1.1/account/verify_credentials.json"
          parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, NSDictionary *  _Nullable userDict) {
              // Success
              User *user  = [User userWithArray:userDict];
          NSLog(@"USERS: %@", user);
+             completion(user, nil);
+         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+             // There was a problem
+             completion(nil, error);
+         }];
+}
+- (void)getUser:(NSString*) screename completion:(void (^)(User *user, NSError *))completion {
+    NSDictionary *parameters = @{@"screen_name": screename};
+    [self GET:@"1.1/users/show.json"
+         parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, NSDictionary *  _Nullable userDict) {
+             // Success
+             User *user  = [User userWithArray:userDict];
+         NSLog(@"USERS: %@", user);
+        NSLog(@"USERS: %@", userDict);
              completion(user, nil);
          } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
              // There was a problem

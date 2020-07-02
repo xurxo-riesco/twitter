@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "APIManager.h"
 
+
 @interface AppDelegate ()
 
 @end
@@ -21,9 +22,24 @@
     if ([[APIManager shared] isAuthorized]) {
         UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
         UINavigationController *navigationController = [storyboard instantiateViewControllerWithIdentifier:@"TweetsNavigationController"];
+        [storyboard instantiateViewControllerWithIdentifier:@"TweetsNavigationController"];
         self.window.rootViewController = navigationController;
     }
+    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    UIViewController * leftDrawer = [mainStoryboard instantiateViewControllerWithIdentifier:@"leftDrawer"];
+    UIViewController * center = [mainStoryboard instantiateViewControllerWithIdentifier:@"TweetsNavigationController"];
+    UINavigationController *centerNav = [mainStoryboard instantiateViewControllerWithIdentifier:@"TweetsNavigationController"];
+    UINavigationController *leftNav = [mainStoryboard instantiateViewControllerWithIdentifier:@"leftDrawer"];
+
+    self.drawerController = [[MMDrawerController alloc] initWithCenterViewController:centerNav leftDrawerViewController:leftNav];
+    self.drawerController.openDrawerGestureModeMask = MMOpenDrawerGestureModePanningCenterView;
+    self.drawerController.closeDrawerGestureModeMask = MMCloseDrawerGestureModePanningCenterView;
+    self.drawerController.title = @"Timeline";
     
+    
+    _window.rootViewController = self.drawerController;
+    [_window makeKeyAndVisible];
+
     return YES;
 }
 

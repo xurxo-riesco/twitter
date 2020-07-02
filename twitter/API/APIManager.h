@@ -25,4 +25,6 @@
 - (void)getUserTimelineWithCompletion:(NSString *)user_id completion:(void (^)(NSArray *tweets, NSError *))completion;
 - (void)getCurrentUser:(void (^)(User *user, NSError *))completion;
 - (void)getMentionsTimelineWithCompletion:(void(^)(NSArray *tweets, NSError *error))completion;
+- (void)getUser:(NSString*) screename completion:(void (^)(User *user, NSError *))completion;
+- (void)searchTimelineWithCompletion:(NSString *)q completion:(void (^)(NSArray *tweets, NSError *))completion;
 @end

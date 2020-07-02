@@ -16,15 +16,15 @@
 #import "TweetDetailsViewController.h"
 #import "ProfileViewController.h"
 #import "MentionsViewController.h"
+#import "UIImageView+AFNetworking.h"
 
 @interface TimelineViewController () < ComposeViewControllerDelegate, UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate>
 @property (strong, nonatomic) NSMutableArray *tweets;
 @property (strong, nonatomic) NSMutableArray *users;
 @property (strong, nonatomic) User *user;
-@property (strong, nonatomic) User *currentUser;
 @property (assign, nonatomic) BOOL isMoreDataLoading;
-@property (assign, nonatomic) BOOL ownProfile;
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *profileBar;
 
 @end
 
@@ -32,16 +32,13 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [[APIManager shared] getCurrentUser:^(User *user, NSError *error) {
-    if (user) {
-        self.currentUser = user;
-    }
-    }];
     UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
     [refreshControl addTarget:self action:@selector(beginRefresh:) forControlEvents:UIControlEventValueChanged];
     [self.tableView insertSubview:refreshControl atIndex:0];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
+
+    
     
     [self getTimeline];
     
@@ -51,10 +48,6 @@
     NSLog(@"%@", self.tweets);
     NSLog(@"TWEETS: %@", self.tweets);
     [self.tableView reloadData];
-}
-- (IBAction)onProfileTap:(id)sender {
-    self.ownProfile = true;
-    [self performSegueWithIdentifier:@"profileSegue" sender: sender];
 }
 
 - (void)beginRefresh:(UIRefreshControl *)refreshControl {
@@ -121,7 +114,6 @@
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if([segue.identifier  isEqual: @"toTweetDetailsVC"]){
-
         UITableViewCell *tappedCell = sender;
         NSIndexPath *indexPath =[self.tableView indexPathForCell:tappedCell];
         Tweet *tweet = self.tweets[indexPath.row];
@@ -135,15 +127,11 @@
         ComposeViewController *composeController = (ComposeViewController*)navigationController.topViewController;
         composeController.delegate = self;
     }else if([segue.identifier  isEqual: @"profileSegue"]){
-        if(self.ownProfile){
-            self.ownProfile = false;
-            ProfileViewController *profileViewController = [segue destinationViewController];
-            profileViewController.user = self.currentUser;
-        }else{
             ProfileViewController *profileViewController = [segue destinationViewController];
             profileViewController.user = self.user;
-        }
-    }else{
+            profileViewController.getUser = 1;
+    }
+    else{
     }
 
     // Get the new view controller using [segue destinationViewController].
@@ -195,7 +183,4 @@
     self.user = user;
     [self performSegueWithIdentifier:@"profileSegue" sender:user];
 }
-
-
-
 @end

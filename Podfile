@@ -10,7 +10,9 @@ target 'twitter' do
   pod 'BDBOAuth1Manager'
   pod 'TTTAttributedLabel'
   pod 'ResponsiveLabel', '~> 1.0.11'
+  pod 'MMDrawerController', '~> 0.5.7'
   pod 'DateTools'
+  pod 'JGProgressHUD'
 end
 
 post_install do |installer|

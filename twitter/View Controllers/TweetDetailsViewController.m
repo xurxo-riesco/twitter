@@ -10,7 +10,10 @@
 #import "UIImageView+AFNetworking.h"
 #import "APIManager.h"
 #import "ComposeViewController.h"
+#import "ProfileViewController.h"
 #import <ResponsiveLabel.h>
+#import "UserStats.h"
+#import "SearchhViewController.h"
 
 @interface TweetDetailsViewController ()
 @property (weak, nonatomic) IBOutlet UIImageView *profileView;
@@ -21,6 +24,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *retweetButton;
 @property (weak, nonatomic) IBOutlet UIButton *replyButton;
 @property (weak, nonatomic) IBOutlet UIImageView *mediaView;
+@property (strong, nonatomic) NSString *hastagh;
 
 @end
 
@@ -29,19 +33,38 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     //[self setupAttributedLabel];
-    
+    NSString *twitterUser =[[self.tweet user] screenName];
+    if([UserStats sharedStats].userStats[@"%@", twitterUser] == nil){
+        [[UserStats sharedStats].userStats setObject:[NSNumber numberWithInt:1] forKey:(@"%@", twitterUser)];
+
+    }else{
+        NSNumber *tmp = [UserStats sharedStats].userStats[@"%@", twitterUser];
+        int count = [tmp intValue] + 1;
+        [[UserStats sharedStats].userStats setObject:[NSNumber numberWithInt:count] forKey:(@"%@", twitterUser)];
+        
+    }
     self.usernameLabel.text = [[self.tweet user] name];
     self.screennameLabel.text = [NSString stringWithFormat:@"@%@", [[self.tweet user] screenName] ];
     self.tweetLabel.text = [self.tweet text];
     self.tweetLabel.userInteractionEnabled = YES;
     PatternTapResponder hashTagTapAction = ^(NSString *tappedString) {
     NSLog(@"HashTag Tapped = %@",tappedString);
+        self.hastagh = tappedString;
+        [self performSegueWithIdentifier:@"hastaghSegue" sender:nil];
     };
     [self.tweetLabel enableHashTagDetectionWithAttributes:
     @{NSForegroundColorAttributeName:[UIColor blueColor], RLTapResponderAttributeName:hashTagTapAction}];
     PatternTapResponder userHandleTapAction = ^(NSString *tappedString){
-    NSLog(@"Username Handler Tapped = %@",tappedString);
+        NSLog(@"Username Handler Tapped = %@",tappedString);
+            [[APIManager shared] getUser:tappedString completion:^(User *user, NSError *error){
+            if (user) {
+                self.user = user;
+                [self performSegueWithIdentifier:@"toProfileVC" sender:nil];
+            }
+            }];
     };
+    
+    
     [self.tweetLabel enableUserHandleDetectionWithAttributes:
     @{NSForegroundColorAttributeName:[UIColor blueColor],RLTapResponderAttributeName:userHandleTapAction}];
     PatternTapResponder urlTapAction = ^(NSString *tappedString) {
@@ -150,9 +173,20 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
-    ComposeViewController *composeViewController = [segue destinationViewController];
-    composeViewController.isResponse = true;
-    composeViewController.tweet = self.tweet;
+    if([segue.identifier isEqual:@"toComposeVC"]){
+        ComposeViewController *composeViewController = [segue destinationViewController];
+        composeViewController.isResponse = true;
+        composeViewController.tweet = self.tweet;
+    }else if([segue.identifier isEqual:@"hastaghSegue"]){
+        SearchhViewController *searchViewController = [segue destinationViewController];
+        searchViewController.toSearch = self.hastagh;
+        
+    }else{
+        NSLog(@"SEGUING USER: %@", self.user);
+        ProfileViewController *profileViewController = [segue destinationViewController];
+        profileViewController.user = self.user;
+        profileViewController.getUser = 1;
+    }
 }
 
 @end
