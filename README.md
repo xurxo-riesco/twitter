@@ -44,7 +44,10 @@ The following **additional** features are implemented:
 
 - [x] Any profile view contains the account's timeline
 - [x] Clicking on mentions redirects to profile
-- [x] Simple Stats Page
+- [x] Clicking on hashtags redirects to hashtag timeline
+- [x] Most viewed user stats
+- [x] Search Tab
+- [x] Twitter style slide out menu
 
 Please list two areas of the assignment you'd like to **discuss further with your peers** during the next class (examples include better ways to implement something, how to extend your app in certain ways, etc):
 
