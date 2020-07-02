@@ -96,15 +96,7 @@
     }];
     [self.tableView reloadData];
 }
-/*
-#pragma mark - Navigationx
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 - (nonnull UITableViewCell *)tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
     Tweet *tweet = self.tweets[indexPath.row];
     ProfileTweet *tweetCell = [ tableView dequeueReusableCellWithIdentifier:@"ProfileCell" ];
@@ -115,6 +107,7 @@
 - (NSInteger)tableView:(nonnull UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.tweets.count;
 }
+
 - (IBAction)didSwipe:(UISwipeGestureRecognizer *)sender {
     NSLog(@"DID SWIPEEE");
     [UIView animateWithDuration:0.8 animations:^{
@@ -138,4 +131,13 @@
     
 }
 
+/*
+#pragma mark - Navigationx
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+}
+*/
 @end

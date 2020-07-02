@@ -35,13 +35,13 @@
 
 - (void)viewDidLoad {
     
-    //self.user1View.userInteractionEnabled = YES;
+    self.user1View.userInteractionEnabled = YES;
     self.user2View.userInteractionEnabled = YES;
     self.user3View.userInteractionEnabled = YES;
 
     UITapGestureRecognizer *tapGesture1 = [[UITapGestureRecognizer alloc] initWithTarget:self  action:@selector(tapGesture1:)];
     UITapGestureRecognizer *tapGesture2 = [[UITapGestureRecognizer alloc] initWithTarget:self  action:@selector(tapGesture2:)];
-     UITapGestureRecognizer *tapGesture3 = [[UITapGestureRecognizer alloc] initWithTarget:self  action:@selector(tapGesture3:)];
+    UITapGestureRecognizer *tapGesture3 = [[UITapGestureRecognizer alloc] initWithTarget:self  action:@selector(tapGesture3:)];
 
     tapGesture1.numberOfTapsRequired = 1;
     tapGesture2.numberOfTapsRequired = 1;
@@ -57,8 +57,6 @@
     
     [super viewDidLoad];
     NSDictionary *someDictionary =[UserStats sharedStats].userStats;
-    //NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    //[defaults setObject:someDictionary forKey:@"stats"];
     NSArray *keysT = [someDictionary allKeys];
     NSSortDescriptor *highestToLowest = [NSSortDescriptor sortDescriptorWithKey:@"self" ascending:NO];
     NSArray *sortedKeystmp = [keysT sortedArrayUsingComparator:^NSComparisonResult(id a, id b) {
@@ -132,35 +130,27 @@
         }
                                          failure:^(NSURLRequest *request, NSHTTPURLResponse * response, NSError *error) {
         }];
-        
     }
     }];
-
-    
-    
-    // Do any additional setup after loading the view.
 }
-- (void) tapGesture1: (id)sender
-{
+
+- (void)tapGesture1: (id)sender{
     self.user = self.user1;
     [self performSegueWithIdentifier:@"toProfileVC" sender:nil];
     
 }
-- (void) tapGesture2: (id)sender
-{
+
+- (void)tapGesture2: (id)sender{
     self.user = self.user2;
     [self performSegueWithIdentifier:@"toProfileVC" sender:nil];
     
 }
 
-- (void) tapGesture3: (id)sender
-{
+- (void)tapGesture3: (id)sender {
     self.user = self.user3;
     [self performSegueWithIdentifier:@"toProfileVC" sender:nil];
     
 }
-
-
 
 #pragma mark - Navigation
 

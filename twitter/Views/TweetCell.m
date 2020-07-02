@@ -17,16 +17,12 @@
     UITapGestureRecognizer *profileTapGestureRecognizer = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTapUserProfile:)];
     [self.profileView addGestureRecognizer:profileTapGestureRecognizer];
     [self.profileView setUserInteractionEnabled:YES];
-    
-    // Initialization code
 }
 - (void) didTapUserProfile:(UITapGestureRecognizer *)sender{
     [self.delegate tweetCell:self didTap:self.tweet.user];
 }
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
-
-    // Configure the view for the selected state
 }
 
 - (IBAction)didTapLike:(id)sender {
@@ -91,14 +87,13 @@
     [self refreshData];
 }
 
-- (void) refreshData
-{
+- (void)refreshData {
     self.retweetsLabel.text  =[NSString stringWithFormat:@"%d", self.tweet.retweetCount];
     self.favoritesLabel.text = [NSString stringWithFormat:@"%d", self.tweet.favoriteCount];
     
 }
 
-- (void) loadTweet:(Tweet *) tweet {
+- (void)loadTweet:(Tweet *) tweet {
     self.tweet = tweet;
     if(self.tweet.retweeted)
     {

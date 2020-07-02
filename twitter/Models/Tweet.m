@@ -13,6 +13,7 @@
 
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary {
     self = [super init];
+    NSLog(@"%@", dictionary);
     if (self) {
 
         // Is this a re-tweet?
@@ -30,6 +31,7 @@
         self.retweetCount = [dictionary[@"retweet_count"] intValue];
         self.replyCount = [dictionary[@"reply_count"] intValue];
         self.retweeted = [dictionary[@"retweeted"] boolValue];
+        
         NSDictionary *entities = dictionary[@"entities"];
         NSArray *media = entities[@"media"];
         for (NSDictionary *dictionary in media) {
@@ -38,9 +40,6 @@
             NSLog(@"%@", urlString);
             self.mediaURL = [NSURL URLWithString:dictionary[@"media_url_https"]];
         }
-        //NSLog(@"%@", media[5]);
-        
-        //self.mediaURL = [NSURL URLWithString:media[@"display_url"]];
         
         NSDictionary *user = dictionary[@"user"];
         self.user = [[User alloc] initWithDictionary:user];
@@ -57,6 +56,7 @@
     }
     return self;
 }
+
 + (NSMutableArray *)tweetsWithArray:(NSArray *)dictionaries{
     NSMutableArray *tweets = [NSMutableArray array];
     for (NSDictionary *dictionary in dictionaries) {

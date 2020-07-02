@@ -13,6 +13,7 @@ target 'twitter' do
   pod 'MMDrawerController', '~> 0.5.7'
   pod 'DateTools'
   pod 'JGProgressHUD'
+  pod 'SYFavoriteButton'
 end
 
 post_install do |installer|

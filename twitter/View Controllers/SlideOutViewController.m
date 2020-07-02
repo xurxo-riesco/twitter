@@ -37,8 +37,8 @@
             self.usernameLabel.text = [NSString stringWithFormat:@"@%@", self.currentUser.screenName];
         }
     }];
-    // Do any additional setup after loading the view.
 }
+
 - (IBAction)logOut:(id)sender {
     AppDelegate *appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
     

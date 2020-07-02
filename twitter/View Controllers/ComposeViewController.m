@@ -27,12 +27,14 @@
     }
     // Do any additional setup after loading the view.
 }
+
 - (IBAction)close:(id)sender {
     [self dismissViewControllerAnimated:true completion:nil];
 }
 - (IBAction)didTapPost:(id)sender {
     [self composeTweet];
 }
+
 - (void)textViewDidChange:(UITextView *)textView
 {
     NSLog(@"Changing");

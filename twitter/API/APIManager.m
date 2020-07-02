@@ -46,6 +46,7 @@ static NSString * const consumerSecret = @"MqrN7xiB2bBRPqs5nhbM4vv78gOkdzGy13p7f
     }
     return self;
 }
+
 - (void)getHomeTimelineWithCompletion:(void(^)(NSArray *tweets, NSError *error))completion {
     /*
     [self GET:@"1.1/statuses/home_timeline.json"
@@ -79,6 +80,7 @@ static NSString * const consumerSecret = @"MqrN7xiB2bBRPqs5nhbM4vv78gOkdzGy13p7f
              completion(nil, error);
          }];
 }
+
 - (void)getMentionsTimelineWithCompletion:(void(^)(NSArray *tweets, NSError *error))completion {
      [self GET:@"1.1/statuses/mentions_timeline.json"
          parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, NSArray *  _Nullable tweetDictionaries) {
@@ -90,6 +92,7 @@ static NSString * const consumerSecret = @"MqrN7xiB2bBRPqs5nhbM4vv78gOkdzGy13p7f
              completion(nil, error);
          }];
 }
+
 - (void)moreHomeTimelineWithCompletion:(NSString *)max_id completion:(void (^)(NSArray *tweets, NSError *))completion {
      NSDictionary *parameters = @{@"max_id": max_id};
      [self GET:@"1.1/statuses/home_timeline.json"
@@ -102,6 +105,7 @@ static NSString * const consumerSecret = @"MqrN7xiB2bBRPqs5nhbM4vv78gOkdzGy13p7f
              completion(nil, error);
          }];
 }
+
 - (void)getUserTimelineWithCompletion:(NSString *)user_id completion:(void (^)(NSArray *tweets, NSError *))completion {
      NSDictionary *parameters = @{@"user_id": user_id};
      [self GET:@"1.1/statuses/user_timeline.json"
@@ -114,6 +118,7 @@ static NSString * const consumerSecret = @"MqrN7xiB2bBRPqs5nhbM4vv78gOkdzGy13p7f
              completion(nil, error);
          }];
 }
+
 - (void)searchTimelineWithCompletion:(NSString *)q completion:(void (^)(NSArray *tweets, NSError *))completion {
      NSDictionary *parameters = @{@"q": q};
      [self GET:@"1.1/search/tweets.json"
@@ -127,6 +132,7 @@ static NSString * const consumerSecret = @"MqrN7xiB2bBRPqs5nhbM4vv78gOkdzGy13p7f
              completion(nil, error);
          }];
 }
+
 - (void)getCurrentUser:(void (^)(User *user, NSError *))completion {
      [self GET:@"1.1/account/verify_credentials.json"
          parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, NSDictionary *  _Nullable userDict) {
@@ -139,6 +145,7 @@ static NSString * const consumerSecret = @"MqrN7xiB2bBRPqs5nhbM4vv78gOkdzGy13p7f
              completion(nil, error);
          }];
 }
+
 - (void)getUser:(NSString*) screename completion:(void (^)(User *user, NSError *))completion {
     NSDictionary *parameters = @{@"screen_name": screename};
     [self GET:@"1.1/users/show.json"
@@ -153,6 +160,7 @@ static NSString * const consumerSecret = @"MqrN7xiB2bBRPqs5nhbM4vv78gOkdzGy13p7f
              completion(nil, error);
          }];
 }
+
 - (void)postStatusWithText:(NSString *)text completion:(void (^)(Tweet *, NSError *))completion{
     NSString *urlString = @"1.1/statuses/update.json";
     NSDictionary *parameters = @{@"status": text};

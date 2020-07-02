@@ -31,6 +31,7 @@ PODS:
   - MMDrawerController/Subclass (0.5.7):
     - MMDrawerController/Core
   - ResponsiveLabel (1.0.11)
+  - SYFavoriteButton (1.1)
   - TTTAttributedLabel (2.0.0)
 
 DEPENDENCIES:
@@ -40,6 +41,7 @@ DEPENDENCIES:
   - JGProgressHUD
   - MMDrawerController (~> 0.5.7)
   - ResponsiveLabel (~> 1.0.11)
+  - SYFavoriteButton
   - TTTAttributedLabel
 
 SPEC REPOS:
@@ -50,6 +52,7 @@ SPEC REPOS:
     - JGProgressHUD
     - MMDrawerController
     - ResponsiveLabel
+    - SYFavoriteButton
     - TTTAttributedLabel
 
 SPEC CHECKSUMS:
@@ -59,8 +62,9 @@ SPEC CHECKSUMS:
   JGProgressHUD: aa403e9a5b45cae98903c4600cccdd98c0c3ec90
   MMDrawerController: 7a4cf8e25596bf2434e03ce50d22a8608ddee6a1
   ResponsiveLabel: 9e31c425ed082481faf2360689243bb0ec8f8b22
+  SYFavoriteButton: 9e1ec437f1aec618c2282439a46d75208afd38e4
   TTTAttributedLabel: 8cffe8e127e4e82ff3af1e5386d4cd0ad000b656
 
-PODFILE CHECKSUM: 9543cac4f1e355b79bebf9cc3bd516a490c0cb66
+PODFILE CHECKSUM: 3168aade0104fd8d00c43d042852f154eb08da12
 
 COCOAPODS: 1.9.3

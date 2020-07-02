@@ -37,14 +37,7 @@
     [self.tableView insertSubview:refreshControl atIndex:0];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
-
-    
-    
     [self getTimeline];
-    
-    // Get timeline
-    
-    
     NSLog(@"%@", self.tweets);
     NSLog(@"TWEETS: %@", self.tweets);
     [self.tableView reloadData];
@@ -67,7 +60,7 @@
     }
 }
 
-- (void) getTimeline{
+- (void)getTimeline {
     [[APIManager shared] getHomeTimelineWithCompletion:^(NSArray *tweets, NSError *error) {
         if (tweets) {
             NSLog(@"😎😎😎 Successfully loaded home timeline");
@@ -79,7 +72,8 @@
         }
     }];
 }
-- (void) getMore{
+
+- (void)getMore {
     NSString *lastTweetIdStr = ((Tweet *)[self.tweets lastObject]).idStr;
     long long maxIdToLoad = [lastTweetIdStr longLongValue] - 1;
     [[APIManager shared] moreHomeTimelineWithCompletion: [@(maxIdToLoad) stringValue] completion:^(NSArray *tweets, NSError *error) {
@@ -95,10 +89,12 @@
         self.isMoreDataLoading = false;
     }];
 }
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
 - (IBAction)logout:(id)sender {
     AppDelegate *appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
     
@@ -110,10 +106,8 @@
 
 
 #pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if([segue.identifier  isEqual: @"toTweetDetailsVC"]){
+    if ([segue.identifier  isEqual: @"toTweetDetailsVC"]) {
         UITableViewCell *tappedCell = sender;
         NSIndexPath *indexPath =[self.tableView indexPathForCell:tappedCell];
         Tweet *tweet = self.tweets[indexPath.row];
@@ -121,8 +115,7 @@
         UINavigationController *navigationController = [segue destinationViewController];
         TweetDetailsViewController *tweetDetailsViewController = (TweetDetailsViewController*)navigationController.topViewController;
         tweetDetailsViewController.tweet = tweet;
-    }
-    else if([segue.identifier  isEqual: @"toComposeVC"]){
+    }else if ([segue.identifier  isEqual: @"toComposeVC"]) {
         UINavigationController *navigationController = [segue destinationViewController];
         ComposeViewController *composeController = (ComposeViewController*)navigationController.topViewController;
         composeController.delegate = self;
@@ -131,19 +124,13 @@
             profileViewController.user = self.user;
             profileViewController.getUser = 1;
     }
-    else{
-    }
-
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
 }
-- (void) didTweet:(Tweet *)tweet{
+
+- (void)didTweet:(Tweet *)tweet {
     [self.tweets insertObject:tweet atIndex:0];
     [self.tableView reloadData];
     NSLog(@"Here");
 }
-
-
 
 - (nonnull UITableViewCell *)tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
     //UITableViewCell *cell = [[UITableViewCell alloc] init];
@@ -153,34 +140,15 @@
     [tweetCell loadTweet:tweet];
     tweetCell.delegate = self;
     return tweetCell;
-    
-    /*
-     cell.usernameLabel.text = [[tweet user] name];
-     cell.accountLabel.text = [NSString stringWithFormat:@"@%@", [[tweet user] screenName] ];
-     cell.contentLabel.text = [tweet text];
-     NSURL *url = [[tweet user] profileImageUrl];
-     NSURLRequest *request = [NSURLRequest requestWithURL:url];
-     [cell.profileView setImageWithURLRequest:request
-     placeholderImage:nil
-     success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
-     cell.profileView.image = image;
-     }
-     failure:^(NSURLRequest *request, NSHTTPURLResponse * response, NSError *error) {
-     // do something for the failure condition
-     }];
-     //TweetCell *tweetCell = [tableView dequeueReusableCellWithIdentifier:@"TweetViewCell"];
-     //[tweetCell loadTweet:tweet];
-     
-     cell.dateLabel.text = [tweet createdAtString];
-     return cell;
-     */
 }
 
 - (NSInteger)tableView:(nonnull UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.tweets.count;
 }
+
 - (void)tweetCell:(TweetCell *)tweetCell didTap:(User *)user{
     self.user = user;
     [self performSegueWithIdentifier:@"profileSegue" sender:user];
 }
+
 @end

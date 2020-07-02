@@ -13,23 +13,18 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    // Initialization code
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
-
-    // Configure the view for the selected state
 }
 
 - (void) loadTweet:(Tweet *) tweet {
     self.tweet = tweet;
-    if(self.tweet.retweeted)
-    {
+    if(self.tweet.retweeted) {
         self.retweetButton.selected = YES;
     }
-    if(self.tweet.favorited)
-    {
+    if (self.tweet.favorited){
         self.favoriteButton.selected = YES;
     }
     self.usernameLabel.text = [[tweet user] name];
@@ -47,8 +42,6 @@
     self.dateLabel.text =[tweet timeAgoString];
     self.retweetsLabel.text = [NSString stringWithFormat:@"%d", [tweet retweetCount]];
     self.favoritesLabel.text = [NSString stringWithFormat:@"%d", [tweet favoriteCount]];
-    
-    
 }
 
 @end

@@ -30,16 +30,18 @@
     if(self.searchBar.text.length > 0){
         [self getTimeline];
     }
-    // Do any additional setup after loading the view.
 }
+
 -(void)searchBar:(UISearchBar *)searchBar
 {
     [searchBar resignFirstResponder];
 }
+
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
 {
     [self.searchBar resignFirstResponder];
 }
+
 - (nonnull UITableViewCell *)tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
     Tweet *tweet = self.tweets[indexPath.row];
     TweetCell *tweetCell = [ tableView dequeueReusableCellWithIdentifier:@"TweetCell" ];
@@ -51,8 +53,7 @@
 - (NSInteger)tableView:(nonnull UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.tweets.count;
 }
--(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
-{
+-(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
     self.toSearch = searchBar.text;
     [self getTimeline];
     [self.tableView reloadData];
@@ -60,8 +61,7 @@
 }
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText{
-    
-    if(searchText !=0){
+    if (searchText !=0) {
         self.toSearch = searchText;
         [self getTimeline];
         
@@ -75,7 +75,8 @@
         
     
 }
-- (void) getTimeline{
+
+- (void)getTimeline {
     [[APIManager shared] searchTimelineWithCompletion:self.toSearch completion:^(NSArray *tweets, NSError *error) {
         if (tweets) {
             NSLog(@"😎😎😎 Successfully loaded home timeline");

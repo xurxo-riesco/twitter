@@ -32,11 +32,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    //[self setupAttributedLabel];
     NSString *twitterUser =[[self.tweet user] screenName];
     if([UserStats sharedStats].userStats[@"%@", twitterUser] == nil){
         [[UserStats sharedStats].userStats setObject:[NSNumber numberWithInt:1] forKey:(@"%@", twitterUser)];
-
     }else{
         NSNumber *tmp = [UserStats sharedStats].userStats[@"%@", twitterUser];
         int count = [tmp intValue] + 1;
@@ -48,32 +46,30 @@
     self.tweetLabel.text = [self.tweet text];
     self.tweetLabel.userInteractionEnabled = YES;
     PatternTapResponder hashTagTapAction = ^(NSString *tappedString) {
-    NSLog(@"HashTag Tapped = %@",tappedString);
+        NSLog(@"HashTag Tapped = %@",tappedString);
         self.hastagh = tappedString;
         [self performSegueWithIdentifier:@"hastaghSegue" sender:nil];
     };
     [self.tweetLabel enableHashTagDetectionWithAttributes:
-    @{NSForegroundColorAttributeName:[UIColor blueColor], RLTapResponderAttributeName:hashTagTapAction}];
+     @{NSForegroundColorAttributeName:[UIColor blueColor], RLTapResponderAttributeName:hashTagTapAction}];
     PatternTapResponder userHandleTapAction = ^(NSString *tappedString){
         NSLog(@"Username Handler Tapped = %@",tappedString);
-            [[APIManager shared] getUser:tappedString completion:^(User *user, NSError *error){
+        [[APIManager shared] getUser:tappedString completion:^(User *user, NSError *error){
             if (user) {
                 self.user = user;
                 [self performSegueWithIdentifier:@"toProfileVC" sender:nil];
             }
-            }];
+        }];
     };
-    
     
     [self.tweetLabel enableUserHandleDetectionWithAttributes:
-    @{NSForegroundColorAttributeName:[UIColor blueColor],RLTapResponderAttributeName:userHandleTapAction}];
+     @{NSForegroundColorAttributeName:[UIColor blueColor],RLTapResponderAttributeName:userHandleTapAction}];
     PatternTapResponder urlTapAction = ^(NSString *tappedString) {
-    NSLog(@"URL Tapped = %@",tappedString);
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:tappedString]];
+        NSLog(@"URL Tapped = %@",tappedString);
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:tappedString]];
     };
     [self.tweetLabel enableURLDetectionWithAttributes:@{NSForegroundColorAttributeName:[UIColor cyanColor],NSUnderlineStyleAttributeName:[NSNumber
-    numberWithInt:1],RLTapResponderAttributeName:urlTapAction}];
-    
+                                                                                                                                          numberWithInt:1],RLTapResponderAttributeName:urlTapAction}];
     NSURL *url = [[self.tweet user] profileImageUrl];
     NSString *urlString = url.absoluteString;
     NSLog(@"%@", urlString);
@@ -90,11 +86,11 @@
     NSLog(@"%@", mediaUrlString);
     NSURLRequest *mediaRequest = [NSURLRequest requestWithURL:mediaUrl];
     [self.mediaView setImageWithURLRequest:mediaRequest
-                            placeholderImage:nil
-                                     success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+                          placeholderImage:nil
+                                   success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
         self.mediaView.image = image;
     }
-                                     failure:^(NSURLRequest *request, NSHTTPURLResponse * response, NSError *error) {
+                                   failure:^(NSURLRequest *request, NSHTTPURLResponse * response, NSError *error) {
     }];
     if(self.tweet.retweeted)
     {
@@ -114,7 +110,7 @@
         self.tweet.favoriteCount -= 1;
         [[APIManager shared] unfavorite:self.tweet completion:^(Tweet *tweet, NSError *error) {
             if(error){
-                 NSLog(@"Error unfavoriting tweet: %@", error.localizedDescription);
+                NSLog(@"Error unfavoriting tweet: %@", error.localizedDescription);
             }
             else{
                 NSLog(@"Successfully unfavorited the following Tweet: %@", tweet.text);
@@ -128,7 +124,7 @@
         self.tweet.favoriteCount += 1;
         [[APIManager shared] favorite:self.tweet completion:^(Tweet *tweet, NSError *error) {
             if(error){
-                 NSLog(@"Error favoriting tweet: %@", error.localizedDescription);
+                NSLog(@"Error favoriting tweet: %@", error.localizedDescription);
             }
             else{
                 NSLog(@"Successfully favorited the following Tweet: %@", tweet.text);
@@ -136,43 +132,38 @@
         }];
     }
 }
-    
-- (IBAction)didTapRetweet:(id)sender {
-        self.retweetButton.selected = !self.retweetButton.selected;
-        if(self.tweet.retweeted)
-        {
-            self.tweet.retweeted = NO;
-            self.tweet.retweetCount -= 1;
-            [[APIManager shared] unretweet:self.tweet completion:^(Tweet *tweet, NSError *error) {
-                if(error){
-                     NSLog(@"Error unfavoriting tweet: %@", error.localizedDescription);
-                }
-                else{
-                    NSLog(@"Successfully unfavorited the following Tweet: %@", tweet.text);
-                }
-            }];
-        }
-        else{
-            self.tweet.retweeted = YES;
-            self.tweet.retweetCount += 1;
-            [[APIManager shared] retweet:self.tweet completion:^(Tweet *tweet, NSError *error) {
-                if(error){
-                     NSLog(@"Error favoriting tweet: %@", error.localizedDescription);
-                }
-                else{
-                    NSLog(@"Successfully favorited the following Tweet: %@", tweet.text);
-                }
-            }];
-        }
-    }
 
+- (IBAction)didTapRetweet:(id)sender {
+    self.retweetButton.selected = !self.retweetButton.selected;
+    if(self.tweet.retweeted)
+    {
+        self.tweet.retweeted = NO;
+        self.tweet.retweetCount -= 1;
+        [[APIManager shared] unretweet:self.tweet completion:^(Tweet *tweet, NSError *error) {
+            if(error){
+                NSLog(@"Error unfavoriting tweet: %@", error.localizedDescription);
+            }
+            else{
+                NSLog(@"Successfully unfavorited the following Tweet: %@", tweet.text);
+            }
+        }];
+    }
+    else{
+        self.tweet.retweeted = YES;
+        self.tweet.retweetCount += 1;
+        [[APIManager shared] retweet:self.tweet completion:^(Tweet *tweet, NSError *error) {
+            if(error){
+                NSLog(@"Error favoriting tweet: %@", error.localizedDescription);
+            }
+            else{
+                NSLog(@"Successfully favorited the following Tweet: %@", tweet.text);
+            }
+        }];
+    }
+}
 
 #pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
     if([segue.identifier isEqual:@"toComposeVC"]){
         ComposeViewController *composeViewController = [segue destinationViewController];
         composeViewController.isResponse = true;
