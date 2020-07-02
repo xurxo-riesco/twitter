@@ -2,7 +2,7 @@
 
 **Twitter-X** is a basic twitter app to read and compose tweets the [Twitter API](https://apps.twitter.com/).
 
-Time spent: **12** hours spent in total
+Time spent: **16** hours spent in total
 
 ## User Stories
 
