@@ -2,7 +2,7 @@
 
 **Twitter-X** is a basic twitter app to read and compose tweets the [Twitter API](https://apps.twitter.com/).
 
-Time spent: **12** hours spent in total
+Time spent: **16** hours spent in total
 
 ## User Stories
 
@@ -51,26 +51,33 @@ The following **additional** features are implemented:
 
 Please list two areas of the assignment you'd like to **discuss further with your peers** during the next class (examples include better ways to implement something, how to extend your app in certain ways, etc):
 
-1.
-2.
+1. Enhance visual design, maybe add some animation pods?
+2. Possibility of embedding videos
 
 ## Video Walkthrough
 
 Here's a walkthrough of implemented user stories:
 
-<img src='http://i.imgur.com/link/to/your/gif/file.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='http://g.recordit.co/nfOOqiLmsV.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='http://g.recordit.co/q8wNRfU5Lo.gif' title='Auto Layout' width='' alt='AutoLayout' />
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
 ## Notes
 
-Describe any challenges encountered while building the app.
+Couple of challenges with outdated pods and rootviewcontrollers in the AppDelegate.m, nothing major.
 
 ## Credits
 
 List an 3rd party libraries, icons, graphics, or other assets you used in your app.
 
 - [AFNetworking](https://github.com/AFNetworking/AFNetworking) - networking task library
+- BDBOAuth1Manager
+- ResponsiveLabel
+- MMDrawerController
+- DateTools
+- JGProgressHUD
+
 
 ## License
 
